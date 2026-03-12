@@ -26,7 +26,7 @@ class MyPlugin(Star):
         except:
             print("获取shit失败")
             music=None
-        yield event.chain_result([music])
+        yield event.plain_result("http:杠杠d2dd.top杠杠shits杠杠tep.mp4")
 
     async def terminate(self):
         """可选择实现异步的插件销毁方法，当插件被卸载/停用时会调用。"""
