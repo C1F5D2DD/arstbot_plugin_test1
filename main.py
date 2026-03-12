@@ -22,6 +22,7 @@ class MyPlugin(Star):
         logger.info(message_chain)
         try:
             music = Video.fromFileSystem(path="/root/shits/ttep.mp4")
+            print(music)
         except:
             print("获取shit失败")
             music=None
