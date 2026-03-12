@@ -21,13 +21,8 @@ class MyPlugin(Star):
         message_str = event.message_str # 用户发的纯文本消息字符串
         message_chain = event.get_messages() # 用户所发的消息的消息链 # from astrbot.api.message_components import *
         logger.info(message_chain)
-        try:
-            music = Video.fromURL('https://d2dd.top/shits/ttep.mp4')
-            print(music)
-        except:
-            print("获取shit失败")
-            music=None
-        chain=[Comp.Video.fromURL(url='https://d2dd.top/shits/ttep.mp4')]
+
+        chain=[Comp.Video.fromURL(url='https://localhost/shits/ttep.mp4')]
         yield event.chain_result(chain)
 
     async def terminate(self):
