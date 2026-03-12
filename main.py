@@ -21,7 +21,7 @@ class MyPlugin(Star):
         message_chain = event.get_messages() # 用户所发的消息的消息链 # from astrbot.api.message_components import *
         logger.info(message_chain)
         try:
-            music = Video.fromFileSystem(path="shits/ttep.mp4")
+            music = Video.fromURL('http://d2dd.top/shits/ttep.mp4')
             print(music)
         except:
             print("获取shit失败")
