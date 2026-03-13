@@ -31,7 +31,7 @@ class MyPlugin(Star):
         provider_id = await self.context.get_current_chat_provider_id(umo=umo)
         llm_resp = await self.context.llm_generate(
             chat_provider_id=provider_id,  # 聊天模型 ID
-            prompt=chat_message
+            prompt=chat_message+'/no_think'
         )
 
         yield event.chain_result([Comp.Plain(llm_resp.completion_text)])
