@@ -22,7 +22,7 @@ class MyPlugin(Star):
         message_chain = event.get_messages() # 用户所发的消息的消息链 # from astrbot.api.message_components import *
         logger.info(message_chain)
 
-        chain=[Comp.Video.fromURL(url='https://localhost/shits/ttep.jpg')]
+        chain=[Comp.Video.fromURL(url='https://localhost/shits/ttep.mp4')]
         yield event.chain_result(chain)
 
     async def terminate(self):
