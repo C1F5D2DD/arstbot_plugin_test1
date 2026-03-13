@@ -37,7 +37,7 @@ class MyPlugin(Star):
         umo = event.unified_msg_origin
         provider_id = await self.context.get_current_chat_provider_id(umo=umo)
 
-        conv_mgr = self.context.conversation_manage
+        conv_mgr = self.context.conversation_manager
         curr_cid = await conv_mgr.get_curr_conversation_id(event.unified_msg_origin)
         user_msg = UserMessageSegment(content=[TextPart(text=chat_message)])
         llm_resp = await self.context.llm_generate(
