@@ -39,15 +39,13 @@ class MyPlugin(Star):
 
         uid = event.unified_msg_origin
         conv_mgr = self.context.conversation_manager
-        curr_cid = await conv_mgr.get_curr_conversation_id(uid)
-        conversation = await conv_mgr.get_conversation(uid, curr_cid)  # Conversation
        # print(uid,conversation,curr_cid,conversation)
         curr_cid = await conv_mgr.get_curr_conversation_id(event.unified_msg_origin)
         user_msg = UserMessageSegment(content=[TextPart(text="hi")])
 
         llm_resp = await self.context.llm_generate(
             chat_provider_id=provider_id,  # 聊天模型 ID
-            contexts=[user_msg],  # 当未指定 prompt 时，使用 contexts 作为输入；同时指定 prompt 和 contexts 时，prompt 会被添加到 LLM 输入的最后
+            contexts=[chat_message],  # 当未指定 prompt 时，使用 contexts 作为输入；同时指定 prompt 和 contexts 时，prompt 会被添加到 LLM 输入的最后
             prompt='/no_think'
         )
 
