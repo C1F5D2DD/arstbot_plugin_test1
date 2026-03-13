@@ -44,10 +44,13 @@ class MyPlugin(Star):
        # print(uid,conversation,curr_cid,conversation)
         curr_cid = await conv_mgr.get_curr_conversation_id(event.unified_msg_origin)
         user_msg = UserMessageSegment(content=[TextPart(text="hi")])
+
         llm_resp = await self.context.llm_generate(
             chat_provider_id=provider_id,  # 聊天模型 ID
             contexts=[user_msg],  # 当未指定 prompt 时，使用 contexts 作为输入；同时指定 prompt 和 contexts 时，prompt 会被添加到 LLM 输入的最后
+            prompt='/no_think'
         )
+
         await conv_mgr.add_message_pair(
             cid=curr_cid,
             user_message=user_msg,
@@ -55,12 +58,6 @@ class MyPlugin(Star):
                 content=[TextPart(text=llm_resp.completion_text)]
             ),
         )
-
-        llm_resp = await self.context.llm_generate(
-            chat_provider_id=provider_id,  # 聊天模型 ID
-            prompt=chat_message+'/no_think'
-        )
-
         yield event.chain_result([Comp.Plain(llm_resp.completion_text)])
 
     async def terminate(self):
