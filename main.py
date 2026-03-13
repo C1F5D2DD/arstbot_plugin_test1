@@ -4,6 +4,13 @@ from astrbot.api import logger
 from astrbot.api.event import filter, AstrMessageEvent
 from astrbot.api.message_components import Video
 import astrbot.api.message_components as Comp
+from astrbot.core.conversation_mgr import Conversation
+from astrbot.core.agent.message import (
+    AssistantMessageSegment,
+    UserMessageSegment,
+    TextPart,
+)
+
 print=logger.info
 @register("helloworld", "YourName", "一个简单的 Hello World 插件", "1.0.0")
 class MyPlugin(Star):
@@ -29,6 +36,26 @@ class MyPlugin(Star):
     async def chat(self, event: AstrMessageEvent,chat_message:str):
         umo = event.unified_msg_origin
         provider_id = await self.context.get_current_chat_provider_id(umo=umo)
+
+        uid = event.unified_msg_origin
+        conv_mgr = self.context.conversation_manager
+        curr_cid = await conv_mgr.get_curr_conversation_id(uid)
+        conversation = await conv_mgr.get_conversation(uid, curr_cid)  # Conversation
+        print(uid,conversation,curr_cid,conversation)
+        curr_cid = await conv_mgr.get_curr_conversation_id(event.unified_msg_origin)
+        user_msg = UserMessageSegment(content=[TextPart(text="hi")])
+        llm_resp = await self.context.llm_generate(
+            chat_provider_id=provider_id,  # 聊天模型 ID
+            contexts=[user_msg],  # 当未指定 prompt 时，使用 contexts 作为输入；同时指定 prompt 和 contexts 时，prompt 会被添加到 LLM 输入的最后
+        )
+        await conv_mgr.add_message_pair(
+            cid=curr_cid,
+            user_message=user_msg,
+            assistant_message=AssistantMessageSegment(
+                content=[TextPart(text=llm_resp.completion_text)]
+            ),
+        )
+
         llm_resp = await self.context.llm_generate(
             chat_provider_id=provider_id,  # 聊天模型 ID
             prompt=chat_message+'/no_think'
