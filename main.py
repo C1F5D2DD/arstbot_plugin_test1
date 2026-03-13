@@ -45,7 +45,7 @@ class MyPlugin(Star):
 
         llm_resp = await self.context.llm_generate(
             chat_provider_id=provider_id,  # 聊天模型 ID
-            contexts=[chat_message],  # 当未指定 prompt 时，使用 contexts 作为输入；同时指定 prompt 和 contexts 时，prompt 会被添加到 LLM 输入的最后
+            contexts=chat_message, # 当未指定 prompt 时，使用 contexts 作为输入；同时指定 prompt 和 contexts 时，prompt 会被添加到 LLM 输入的最后
             prompt='/no_think'
         )
 
