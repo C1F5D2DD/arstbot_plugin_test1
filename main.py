@@ -26,12 +26,12 @@ class MyPlugin(Star):
         chain=[Comp.Image.fromURL(url='https://localhost/shits/mm.jpg')]
         yield event.chain_result(chain)
     @filter.command('c')
-    async def chat(self, event: AstrMessageEvent,usermessage:int):
+    async def chat(self, event: AstrMessageEvent,chat_message:int):
         umo = event.unified_msg_origin
         provider_id = await self.context.get_current_chat_provider_id(umo=umo)
         llm_resp = await self.context.llm_generate(
             chat_provider_id=provider_id,  # 聊天模型 ID
-            prompt=usermessage
+            prompt=chat_message
         )
 
         yield event.chain_result([Comp.Plain(llm_resp)])
