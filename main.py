@@ -41,7 +41,7 @@ class MyPlugin(Star):
         conv_mgr = self.context.conversation_manager
         curr_cid = await conv_mgr.get_curr_conversation_id(uid)
         conversation = await conv_mgr.get_conversation(uid, curr_cid)  # Conversation
-        print(uid,conversation,curr_cid,conversation)
+       # print(uid,conversation,curr_cid,conversation)
         curr_cid = await conv_mgr.get_curr_conversation_id(event.unified_msg_origin)
         user_msg = UserMessageSegment(content=[TextPart(text="hi")])
         llm_resp = await self.context.llm_generate(
