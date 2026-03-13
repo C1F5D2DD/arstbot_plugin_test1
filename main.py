@@ -24,7 +24,7 @@ class MyPlugin(Star):
         logger.info(message_chain)
         umo = event.unified_msg_origin
         provider_id = await self.context.get_current_chat_provider_id(umo=umo)
-        chain=[Comp.Image.fromURL(url='https://localhost/shits/mm.jpg'),Comp.Plain(f"umo:{umo},")]
+        chain=[Comp.Image.fromURL(url='https://localhost/shits/mm.jpg'),Comp.Plain(f"umo:{umo},pid:{provider_id}")]
         yield event.chain_result(chain)
 
     async def terminate(self):
