@@ -10,6 +10,7 @@ class MyPlugin(Star):
     def __init__(self, context: Context):
         super().__init__(context)
 
+
     async def initialize(self):
         """可选择实现异步的插件初始化方法，当实例化该插件类之后会自动调用该方法。"""
 
@@ -21,8 +22,9 @@ class MyPlugin(Star):
         message_str = event.message_str # 用户发的纯文本消息字符串
         message_chain = event.get_messages() # 用户所发的消息的消息链 # from astrbot.api.message_components import *
         logger.info(message_chain)
-
-        chain=[Comp.Video.fromURL(url='https://localhost/shits/ttep.mp4')]
+        umo = event.unified_msg_origin
+        provider_id = await self.context.get_current_chat_provider_id(umo=umo)
+        chain=[Comp.Video.fromURL(url='https://localhost/shits/'),Comp.Plain(f"umo:{umo},")]
         yield event.chain_result(chain)
 
     async def terminate(self):
